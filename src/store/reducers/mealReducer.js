@@ -2,9 +2,11 @@ import {MEALS, CATEGORIES} from '../../data/dummy-data';
 import { TOGGLE_FAVORITE } from '../actions/meals';
 import {CATEGORY_ID, CLEAR, CATID_UPDATE} from '../actions/meals';
 import {useEffect} from 'react';
+
+
 const initialState={
   
-    meals:MEALS,
+    meals:[{}],
     categoryId:CATEGORIES,
    // filteredMeals:MEALS,
     favoriteMeals:[],
@@ -16,7 +18,18 @@ const initialState={
     
 };
 
-
+// useEffect(() => {
+  fetch('http://food.theflashdemo.com/api/all_meal')
+    .then((response) => response.json())
+    .then((json) => {
+      initialState.meals=json.Meals
+      console.log("initialState.meals",initialState.meals)
+      // setTitle(json.name)
+      // setDescription(json.image);
+    })
+    .catch((error) => console.error(error))
+    // .finally(() => setLoading(false));
+// }, []);
 
 const mealReducer = (state = initialState, action) => {
     switch (action.type) {

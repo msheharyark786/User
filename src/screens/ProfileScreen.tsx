@@ -14,6 +14,7 @@ import {
   Button } from 'react-native';
 import Header from '../components/Header';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import ImagePicker from 'react-native-image-crop-picker';
 import  Icon  from 'react-native-vector-icons/Ionicons';
 import  MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';

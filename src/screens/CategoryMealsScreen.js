@@ -12,7 +12,7 @@ const CategoryMealScreen = props => {
   const catId = props.navigation.getParam('categoryId');
 const availableMeals=useSelector(state=>state.mealReducer.meals);
   const displayedMeals =availableMeals.filter(
-    meal => meal.categoryIds.indexOf(catId) >= 0
+    meal => meal.resturant_id.indexOf(catId) >= 0
   );
   
  

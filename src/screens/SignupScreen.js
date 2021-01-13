@@ -13,10 +13,12 @@ import {
 
 import Logos from '../components/Logos';
 import LoginScreen from './LoginScreen';
+import Spinner from 'react-native-loading-spinner-overlay';
 import {useState, useEffect} from 'react';
 
 const SignupScreen = (props) => {
   const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState('');
   const [userName, setUsername] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -43,6 +45,7 @@ const SignupScreen = (props) => {
   }
 
   const register= async()=>{
+    setIsLoading(true)
     await fetch('http://food.theflashdemo.com/api/register', {
     method: 'POST',
     mode:'no-cors',
@@ -61,13 +64,12 @@ const SignupScreen = (props) => {
   .then((responseData) => {
     console.log("POST Response", "Response Body -> " + JSON.stringify(responseData))
     if(responseData.Msg==='Register successfully'){
-      props.navigation.navigate({
-        routeName:'Categories'
-      })
+      handleLogin();
     }
     else{
       console.log("else part ,  This is Incorrect...")
       alert("try again , You dont follow the rules")
+      setIsLoading(false);
     }
     // console.log("loginResponse",loginResponse);
     
@@ -79,6 +81,20 @@ const SignupScreen = (props) => {
   // })
   
   }
+
+  const handleLogin=async()=>{
+    // console.log("hanji",resData.Msg)
+    await props.navigation.navigate({
+      routeName:'Categories'
+    })
+  
+    setIsLoading(false);
+
+      //setEmail("");  
+      //setPassword("");
+      
+  }
+
 
   const handleSignupButton = () => {
 
@@ -187,14 +203,26 @@ const SignupScreen = (props) => {
             onChangeText={(value) => setPhoneNumber(value)}
             initialValue=""
           />
+           {isLoading ? (
+          <Spinner
+          //visibility of Overlay Loading Spinner
+          visible={isLoading}
+          // size="normal"
+          // animation='fade'
+          //Text with the Spinner
+          // textContent={'Loading...'}
+          //Text style of the Spinner Text
+          // textStyle={styles.activityIndicator}
+        />):(
 
           <TouchableOpacity
           style={styles.signupButton}
           activeOpacity={0.7}
-           onPress={() => { handleSignupButton ()} }>
+           onPress={handleSignupButton}>
 
           <Text style={styles.signupButtonText}> Sign Up</Text>
         </TouchableOpacity>
+        )}
 
 
           <View style={styles.signupContianer}>
